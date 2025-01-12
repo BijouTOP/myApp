@@ -31,13 +31,13 @@ export class Tab2Page implements OnInit {
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
-      if (params) {
+      if (Object.keys(params).length > 0) {
         this.myForm.patchValue({
-          description: params['description'],
-          type: params['type'],
-          state: params['state'],
-          startAt: params['startAt'],
-          endAt: params['endAt'],
+          description: params['description'] || '',
+          type: params['type'] || '',
+          state: params['state'] || '',
+          startAt: params['startAt'] || null,
+          endAt: params['endAt'] || null,
         });
       }
     });
