@@ -15,6 +15,13 @@
           End At: {{ travel.endAt ? (travel.endAt | date: 'dd-MM-yyyy HH:mm:ss')
           : 'N/A' }}
         </p>
+        <p>Locations:</p>
+        <ul>
+          <li *ngFor="let location of travel.locations">
+            <p>Name: {{ location.prop1 }}</p>
+            <p>Description {{ location.description }}</p>
+          </li>
+        </ul>
       </ion-label>
       <ion-button
         [fill]="travel.isFav ? 'solid' : 'outline'"

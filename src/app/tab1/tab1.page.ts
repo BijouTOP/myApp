@@ -25,6 +25,7 @@ export class Tab1Page {
         state: travel.state,
         startAt: travel.startAt,
         endAt: travel.endAt,
+        id: travel.id
       },
     });
   }

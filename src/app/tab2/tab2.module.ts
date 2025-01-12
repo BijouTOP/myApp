@@ -9,6 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { Tab2PageRoutingModule } from './tab2-routing.module';
 import { HeaderComponent } from '../header/header.component';
+import { ModalComponent } from '../modal/modal.component';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { HeaderComponent } from '../header/header.component';
     Tab2PageRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    HeaderComponent
+    HeaderComponent,
+    ModalComponent
   ],
   declarations: [Tab2Page]
 })

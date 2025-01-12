@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Enter Details</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">Cancel</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label position="stacked">Name</ion-label>
+      <ion-input
+        [(ngModel)]="prop1"
+        placeholder="Enter the name of the location"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Description</ion-label>
+      <ion-textarea
+        [(ngModel)]="description"
+        placeholder="Enter a description for the location"
+      ></ion-textarea>
+    </ion-item>
+  </ion-list>
+  <ion-footer>
+    <ion-button expand="full" (click)="save()">Save</ion-button>
+  </ion-footer>
+</ion-content>
