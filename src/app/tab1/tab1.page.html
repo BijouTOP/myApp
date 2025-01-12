@@ -1,9 +1,39 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title> Tab 1 </ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header></app-header>
 
 <ion-content [fullscreen]="true">
-  <ion-button (click)="sendRequest()">Send API Request</ion-button>
+  <ion-list>
+    <ion-item *ngFor="let travel of travels">
+      <ion-label>
+        <h2>Description: {{ travel.description }}</h2>
+        <p>Type: {{ travel.type || 'N/A' }}</p>
+        <p>State: {{ travel.state }}</p>
+        <p>
+          Start At: {{ travel.startAt ? (travel.startAt | date: 'dd-MM-yyyy
+          HH:mm:ss') : 'N/A' }}
+        </p>
+        <p>
+          End At: {{ travel.endAt ? (travel.endAt | date: 'dd-MM-yyyy HH:mm:ss')
+          : 'N/A' }}
+        </p>
+      </ion-label>
+      <ion-button
+        [fill]="travel.isFav ? 'solid' : 'outline'"
+        (click)="toogleFav(travel)"
+      >
+        <ion-icon slot="start" name="star"></ion-icon>
+        Star
+      </ion-button>
+      <ion-button fill="outline" (click)="editTravel(travel)">
+        Edit
+        <ion-icon slot="start" name="create"></ion-icon>
+      </ion-button>
+      <ion-button
+        fill="outline"
+        color="danger"
+        (click)="deleteFromList(travel.id)"
+      >
+        Delete
+      </ion-button>
+    </ion-item>
+  </ion-list>
 </ion-content>
