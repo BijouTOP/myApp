@@ -110,11 +110,9 @@ export class Tab1Page {
       next: (response) => {
         this.travels = response;
         this.filteredTravels = response;
-        console.log(response);
         loading.dismiss();
       },
       error: (error) => {
-        console.error('Error:', error);
         loading.dismiss();
       }
     });
@@ -134,7 +132,6 @@ export class Tab1Page {
         this.presentToast('Travel deleted successfully');
       },
       error: (error) => {
-        console.error('Error:', error);
         loading.dismiss();
         this.presentToast('Error deleting travel');
       }
@@ -157,7 +154,6 @@ export class Tab1Page {
         this.presentToast('Travel updated successfully');
       },
       error: (error) => {     
-        console.error('Error:', error);
         loading.dismiss();
         this.presentToast('Error updating travel');
       }

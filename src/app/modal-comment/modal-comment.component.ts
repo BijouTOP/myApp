@@ -51,11 +51,9 @@ export class ModalCommentComponent  {
             this.comments = travel.comments;
           }
         }
-        console.log(this.comments);
         loading.dismiss();
       },
       error: (error) => {
-        console.error('Error:', error);
         loading.dismiss();
       }
     });
@@ -76,7 +74,6 @@ export class ModalCommentComponent  {
         this.presentToast('Comment deleted successfully');
       },
       error: (error) => {
-        console.error('Error:', error);
         loading.dismiss();
         this.presentToast('Error deleting comment');
       }
@@ -102,7 +99,6 @@ export class ModalCommentComponent  {
       loading.dismiss();
       },
       error: (error) => {
-      console.error('Error:', error);
       loading.dismiss();
       }
     });

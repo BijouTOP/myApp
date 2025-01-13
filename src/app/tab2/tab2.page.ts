@@ -51,7 +51,6 @@ export class Tab2Page implements OnInit {
     this.resetForm();
     this.untoogleButtonVisibility();
     this.route.queryParams.subscribe(params => {
-      console.log(params);
       if (Object.keys(params).length > 0) {
         this.toogleButtonVisibility();
         this.id = params['id'];
@@ -81,10 +80,6 @@ export class Tab2Page implements OnInit {
 
   async onSubmit() {
     let {description, type, state, startAt, endAt} = this.myForm.value;
-
-    console.log(this.myForm.value);
-    console.log("Anny are u ok?");
-    console.log(this.myForm.value);
 
     if (description == "" || description == null) {
       const alert = await this.alertCtrl.create({
@@ -199,7 +194,6 @@ export class Tab2Page implements OnInit {
             this.presentToast('Travel updated successfully');
           },
           error: (error) => {
-            console.error('Error:', error);
             loading.dismiss();
             this.presentToast('Error updating travel');
           }
@@ -213,7 +207,6 @@ export class Tab2Page implements OnInit {
             this.presentToast('Travel added successfully');
           },
           error: (error) => {
-            console.error('Error:', error);
             loading.dismiss();
             this.presentToast('Error adding travel');
           }
