@@ -1,5 +1,6 @@
 import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Tab3Page } from './tab3.page';
@@ -15,7 +16,8 @@ import { HeaderComponent } from '../header/header.component';
     FormsModule,
     ExploreContainerComponentModule,
     Tab3PageRoutingModule,
-    HeaderComponent
+    HeaderComponent,
+    HttpClientModule
   ],
   declarations: [Tab3Page]
 })

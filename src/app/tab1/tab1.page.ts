@@ -166,6 +166,13 @@ export class Tab1Page {
     });
     await modal.present();
   }
+  showLocations(id: string) {
+    this.router.navigate(['/tabs/tab3'], {
+      queryParams: {
+        id: id
+      },
+    });
+  }
   async presentToast(message: string) {
     const toast = await this.toastController.create({
       message: message,

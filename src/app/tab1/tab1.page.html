@@ -43,7 +43,9 @@
         >
           Delete
         </ion-button>
-        <ion-button fill="outline"> Show Locations </ion-button>
+        <ion-button fill="outline" (click)="showLocations(travel.id)">
+          Show Locations
+        </ion-button>
         <ion-button fill="outline" (click)="travelComments(travel.id)">
           Comments
         </ion-button>
