@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab1',
@@ -14,7 +15,7 @@ export class Tab1Page {
   url: string = 'https://mobile-api-one.vercel.app/api/travels';
 
   constructor(private http: HttpClient,
-    private loadingController: LoadingController, private router: Router
+    private loadingController: LoadingController, private router: Router, private toastController: ToastController
   ) {}
 
   editTravel(travel: any) {
@@ -81,10 +82,12 @@ export class Tab1Page {
       next: (response) => {
         this.tab1Get();
         loading.dismiss();
+        this.presentToast('Travel deleted successfully');
       },
       error: (error) => {
         console.error('Error:', error);
         loading.dismiss();
+        this.presentToast('Error deleting travel');
       }
     });
   }
@@ -102,11 +105,21 @@ export class Tab1Page {
       next: (response) => {
         this.tab1Get();
         loading.dismiss();
+        this.presentToast('Travel updated successfully');
       },
       error: (error) => {     
         console.error('Error:', error);
         loading.dismiss();
+        this.presentToast('Error updating travel');
       }
     });
+  }
+  async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+      position: 'bottom'
+    });
+    await toast.present();
   }
 }

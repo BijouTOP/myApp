@@ -6,6 +6,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LoadingController } from '@ionic/angular';
 import { ModalController } from '@ionic/angular';
 import { ModalComponent } from '../modal/modal.component';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab2',
@@ -23,7 +24,7 @@ export class Tab2Page implements OnInit {
   buttonLabel: string = 'Submit';
 
   constructor(private fb: FormBuilder, private alertCtrl: AlertController, private http: HttpClient,
-    private loadingController: LoadingController,private modalController: ModalController, private route: ActivatedRoute, private router: Router) {
+    private loadingController: LoadingController, private modalController: ModalController, private toastController: ToastController, private route: ActivatedRoute, private router: Router) {
     this.now = new Date().toISOString();
 
     this.myForm = this.fb.group({
@@ -82,8 +83,10 @@ export class Tab2Page implements OnInit {
     let {description, type, state, startAt, endAt} = this.myForm.value;
 
     console.log(this.myForm.value);
+    console.log("Anny are u ok?");
+    console.log(this.myForm.value);
 
-    if (description == "") {
+    if (description == "" || description == null) {
       const alert = await this.alertCtrl.create({
       header: 'Invalid Description',
       message: 'Please enter a description for your travel.',
@@ -93,7 +96,7 @@ export class Tab2Page implements OnInit {
       await alert.present();
       return;
     }
-    else if (type == "") {
+    else if (type == "" || type == null) {
       const alert = await this.alertCtrl.create({
       header: 'Invalid Type',
       message: 'Please select a type for your travel.',
@@ -104,7 +107,7 @@ export class Tab2Page implements OnInit {
       return;
     }
 
-    else if (state == "") {
+    else if (state == "" || state == null) {
       const alert = await this.alertCtrl.create({
       header: 'Invalid State',
       message: 'Please select a state for your travel.',
@@ -192,10 +195,13 @@ export class Tab2Page implements OnInit {
             this.variable = false;
             this.router.navigate([], { queryParams: {} });
             loading.dismiss();
+            this.untoogleButtonVisibility();
+            this.presentToast('Travel updated successfully');
           },
           error: (error) => {
             console.error('Error:', error);
             loading.dismiss();
+            this.presentToast('Error updating travel');
           }
         });
       }
@@ -204,10 +210,12 @@ export class Tab2Page implements OnInit {
           next: (response) => {
             loading.dismiss();
             this.myForm.reset();
+            this.presentToast('Travel added successfully');
           },
           error: (error) => {
             console.error('Error:', error);
             loading.dismiss();
+            this.presentToast('Error adding travel');
           }
       });
     } 
@@ -227,19 +235,42 @@ export class Tab2Page implements OnInit {
       });
       await modal.present();
       const { data } = await modal.onDidDismiss();
+      if (data.prop1 === "" || data.description === "") {
+        const alert = await this.alertCtrl.create({
+          header: 'Invalid Location',
+          message: 'Please enter a location name and description.',
+          buttons: ['OK'],
+          });
+        
+          await alert.present();
+          return;
+      }
+      const loading = await this.loadingController.create({
+        message: 'Please wait...'
+      });
+    
+        await loading.present();
       if (data) {
-        console.log('User Input:', data.name);
-        console.log('Location Data:', data.description);
         data.travelId = this.id;
         this.http.post<any>(this.url + '/locations', data, { headers: this.authHeader() }).subscribe({
           next: (response) => {
-            console.log(response);
+            this.presentToast('Location added successfully');
+            loading.dismiss();
           },
           error: (error) => {
-            console.error('Error:', error);
+            this.presentToast('Error adding location');
+            loading.dismiss();
         }
       });
     }
+  }
+  async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+      position: 'bottom'
+    });
+    await toast.present();
   }
 
 }

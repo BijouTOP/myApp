@@ -26,6 +26,7 @@ export class ModalComponent  {
     };
   
     this.modalController.dismiss(userInput);
+    
   }
 }
   
