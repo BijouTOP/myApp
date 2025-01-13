@@ -1,8 +1,9 @@
 <app-header></app-header>
 
 <ion-content [fullscreen]="true">
+  <ion-searchbar (ionInput)="filterTravels($event)"></ion-searchbar>
   <ion-list>
-    <ion-item *ngFor="let travel of travels">
+    <ion-item *ngFor="let travel of filteredTravels">
       <ion-label>
         <h2>Description: {{ travel.description }}</h2>
         <p>Type: {{ travel.type || 'N/A' }}</p>
@@ -43,8 +44,9 @@
           Delete
         </ion-button>
         <ion-button fill="outline"> Show Locations </ion-button>
-        <ion-button fill="outline"> Comment </ion-button>
-        <!-- In Development -->
+        <ion-button fill="outline" (click)="travelComments(travel.id)">
+          Comments
+        </ion-button>
       </div>
     </ion-item>
   </ion-list>

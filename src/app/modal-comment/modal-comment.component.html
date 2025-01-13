@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Enter Comments</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">Cancel</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-input
+      placeholder="Enter your comment"
+      [(ngModel)]="comment"
+    ></ion-input>
+  </ion-item>
+  <ion-button expand="full" (click)="submitComment()">Submit</ion-button>
+  <ion-list>
+    <ion-item *ngFor="let comment of comments">
+      <ion-label>{{ comment.comment }}</ion-label>
+      <ion-button slot="end" color="danger" (click)="deleteComment(comment.id)"
+        >Delete</ion-button
+      >
+    </ion-item>
+  </ion-list>
+</ion-content>

@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
+import { ModalCommentComponent } from '../modal-comment/modal-comment.component';
 
 @Component({
   selector: 'app-tab1',
@@ -12,10 +14,11 @@ import { ToastController } from '@ionic/angular';
 })
 export class Tab1Page {
   travels: any[] = [];
+  filteredTravels: any[] = [];
   url: string = 'https://mobile-api-one.vercel.app/api/travels';
 
   constructor(private http: HttpClient,
-    private loadingController: LoadingController, private router: Router, private toastController: ToastController
+    private loadingController: LoadingController, private router: Router, private toastController: ToastController, private modalController: ModalController
   ) {}
 
   editTravel(travel: any) {
@@ -30,6 +33,51 @@ export class Tab1Page {
       },
     });
   }
+
+  filterTravels(event: any) {
+    const searchTerm = event.target.value.toLowerCase();
+    if (searchTerm === '') {
+      this.filteredTravels = this.travels;
+      return;
+    }
+    else if (searchTerm === 'fav' || searchTerm === 'favorite' ) {
+      this.filteredTravels = this.travels.filter(travel => travel.isFav);
+      return;
+    }
+    else if (searchTerm === 'upcoming') {
+      this.filteredTravels = this.travels.filter(travel => travel.state === 'upcoming');
+      return;
+    }
+    else if (searchTerm === 'ongoing') {
+      this.filteredTravels = this.travels.filter(travel => travel.state === 'ongoing');
+      return;
+    }
+    else if (searchTerm === 'completed') {
+      this.filteredTravels = this.travels.filter(travel => travel.state === 'completed');
+      return;
+    }
+    else if (searchTerm === 'business') {
+      this.filteredTravels = this.travels.filter(travel => travel.type === 'business');
+      return;
+    }
+    else if (searchTerm === 'leisure') {
+      this.filteredTravels = this.travels.filter(travel => travel.type === 'leisure');
+      return;
+    }
+    else if (searchTerm === 'other') {
+      this.filteredTravels = this.travels.filter(travel => travel.type === 'other');
+      return;
+    }
+    else {this.filteredTravels = this.travels.filter(travel => {
+      return travel.description.toLowerCase().includes(searchTerm) ||
+             travel.type.toLowerCase().includes(searchTerm) ||
+             travel.state.toLowerCase().includes(searchTerm) ||
+             travel.locations.some((location: { prop1: string; description: string; }) => location.prop1.toLowerCase().includes(searchTerm) || location.description.toLowerCase().includes(searchTerm));
+    });}
+
+    
+  }
+
 
   ngOnInit() {
     this.tab1Get();
@@ -61,6 +109,7 @@ export class Tab1Page {
     this.http.get<any[]>(this.url, { headers: this.authHeader() }).subscribe({
       next: (response) => {
         this.travels = response;
+        this.filteredTravels = response;
         console.log(response);
         loading.dismiss();
       },
@@ -113,6 +162,13 @@ export class Tab1Page {
         this.presentToast('Error updating travel');
       }
     });
+  }
+  async travelComments(id: string) {
+    const modal = await this.modalController.create({
+      component: ModalCommentComponent,
+      componentProps: { travelId: id }
+    });
+    await modal.present();
   }
   async presentToast(message: string) {
     const toast = await this.toastController.create({

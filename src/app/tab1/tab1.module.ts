@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { Tab1PageRoutingModule } from './tab1-routing.module';
 import { HeaderComponent } from '../header/header.component';
+import { ModalCommentComponent } from '../modal-comment/modal-comment.component';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { HeaderComponent } from '../header/header.component';
     ExploreContainerComponentModule,
     Tab1PageRoutingModule,
     HttpClientModule,
-    HeaderComponent
+    HeaderComponent,
+    ModalCommentComponent
   ],
   declarations: [Tab1Page]
 })
