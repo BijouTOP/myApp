@@ -19,28 +19,33 @@
         <ul>
           <li *ngFor="let location of travel.locations">
             <p>Name: {{ location.prop1 }}</p>
-            <p>Description {{ location.description }}</p>
+            <p>Description: {{ location.description }}</p>
           </li>
         </ul>
       </ion-label>
-      <ion-button
-        [fill]="travel.isFav ? 'solid' : 'outline'"
-        (click)="toogleFav(travel)"
-      >
-        <ion-icon slot="start" name="star"></ion-icon>
-        Star
-      </ion-button>
-      <ion-button fill="outline" (click)="editTravel(travel)">
-        Edit
-        <ion-icon slot="start" name="create"></ion-icon>
-      </ion-button>
-      <ion-button
-        fill="outline"
-        color="danger"
-        (click)="deleteFromList(travel.id)"
-      >
-        Delete
-      </ion-button>
+      <div style="display: flex; flex-direction: column">
+        <ion-button
+          [fill]="travel.isFav ? 'solid' : 'outline'"
+          (click)="toogleFav(travel)"
+        >
+          <ion-icon slot="start" name="star"></ion-icon>
+          Star
+        </ion-button>
+        <ion-button fill="outline" (click)="editTravel(travel)">
+          Edit
+          <ion-icon slot="start" name="create"></ion-icon>
+        </ion-button>
+        <ion-button
+          fill="outline"
+          color="danger"
+          (click)="deleteFromList(travel.id)"
+        >
+          Delete
+        </ion-button>
+        <ion-button fill="outline"> Show Locations </ion-button>
+        <ion-button fill="outline"> Comment </ion-button>
+        <!-- In Development -->
+      </div>
     </ion-item>
   </ion-list>
 </ion-content>
