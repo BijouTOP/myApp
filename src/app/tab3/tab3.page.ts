@@ -3,6 +3,9 @@ import { Component } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
+import { ModalController } from '@ionic/angular';
+
+import { ModalCommentLocationsComponent } from '../modal-comment-locations/modal-comment-locations.component';
 
 @Component({
   selector: 'app-tab3',
@@ -16,7 +19,7 @@ export class Tab3Page {
   id!: string;
   url: string = 'https://mobile-api-one.vercel.app/api/travels';
 
-  constructor(private http: HttpClient, private loadingController: LoadingController, private toastController: ToastController, private activatedRoute: ActivatedRoute, private route: ActivatedRoute) {
+  constructor(private http: HttpClient,private modalController: ModalController, private loadingController: LoadingController, private toastController: ToastController, private activatedRoute: ActivatedRoute, private route: ActivatedRoute) {
 
   }
   filterLocations(event: any) {
@@ -69,8 +72,14 @@ export class Tab3Page {
   }
 
 
-  viewComments(id: string) {
-    // asfwasdgedfhh
+  async viewComments(location: any) {
+   
+    const modal = await this.modalController.create({
+    component: ModalCommentLocationsComponent,
+    componentProps: { location: location , id: this.id}
+    });
+       await modal.present();
+     
   }
   async deleteLocation(id: string)
   {
